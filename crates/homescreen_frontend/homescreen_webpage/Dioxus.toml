@@ -7,7 +7,6 @@ asset_dir = "static"
 [web.app]
 title="home"
 
-
 [web.watcher]
 watch_path = ["src", "static"]
 
