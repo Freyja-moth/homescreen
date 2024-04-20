@@ -1,0 +1,17 @@
+[package]
+name = "homescreen_backend"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+actix-cors = "0.7.0"
+actix-web = "4.5.1"
+env_logger = "0.11.3"
+homescreen_data = { version = "0.1.0", path = "../homescreen_data", features = ["poison_wasm"] }
+homescreen_errors = { version = "0.1.0", path = "../homescreen_errors", features = ["poison_wasm"] }
+log = "0.4.21"
+serde = { version = "1.0.197", features = ["serde_derive"] }
+sqlx = { version = "0.7.4", features = ["runtime-tokio", "mysql"] }
+toml = "0.8.12"

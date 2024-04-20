@@ -1,0 +1,172 @@
+body {
+    background-color: var(--primary-background-color);
+    color: var(--primary-font-color);
+    font-family: var(--font-monospace);
+    font-size: var(--font-size-body);
+}
+
+#main {
+    user-select: none;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+#traichu {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--spacing-l) var(--spacing-m) var(--spacing-m) var(--spacing-m);
+    row-gap: var(--spacing-l);
+    width: 20rem;
+}
+
+#search {
+    display: flex;
+    justify-content: center;
+}
+
+#search form {
+    flex: 1 1 auto;
+    width: 100%;
+}
+
+#search input {
+    background-color: transparent;
+    background-position: right 1.25rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5rem 1.5rem;
+    border-radius: 0.5rem;
+    color: var(--primary-link-color);
+    font-family: var(--font-sans-serif);
+    line-height: 1.5;
+    outline: 0.25rem solid transparent;
+    padding: var(--spacing-m);
+    width: 100%;
+}
+
+@media (prefers-color-scheme: dark) {
+    #search input {
+        background-image: var(--svg-search-gray);
+        border: 0.125rem solid hsl(var(--color-white-hsl) / 0.25);
+    }
+    
+    #search input:hover { border-color: hsl(var(--color-white-hsl) / 0.5); }    
+
+    #bookmarks a:focus,
+    #bookmarks a:hover { background-color: hsl(var(--color-white-hsl) / 0.05); }
+}
+
+@media (prefers-color-scheme: light) {
+    #weather img { filter: drop-shadow(0 0 0 hsl(var(--color-black-hsl) / 0.75)); }
+
+    #search input {
+        background-image: var(--svg-search-light-gray);
+        border: 0.125rem solid hsl(var(--color-black-hsl) / 0.25);
+    } 
+
+    #search input:hover { border-color: hsl(var(--color-black-hsl) / 0.5); }
+
+    #bookmarks a:focus,
+    #bookmarks a:hover { background-color: hsl(var(--color-black-hsl) / 0.05); }
+}
+
+#search input:focus {
+    background-color: hsl(var(--color-white-hsl) / 0.025);
+    border-color: var(--color-purple);
+    outline-color: hsl(var(--color-purple-hsl) / 0.25);
+}
+
+#sections {
+    /* text-align: center; */
+    font-size: var(--font-size-body);
+    text-decoration: underline var(--color-purple);
+
+    color: var(--primary-link-hover-color);
+}
+
+#bookmarks {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+#bookmarks ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#bookmarks li {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    line-height: 1;
+    margin-bottom: var(--spacing-xs);
+}
+
+#website-error {
+    color: var(--primary-link-color);
+    text-align: center;
+}
+
+.favicon {
+    margin-right: var(--spacing-s);
+    height: 1rem;
+}
+
+#bookmarks a {
+    align-items: center;
+    border-radius: 0.25rem;
+    display: flex;
+    color: var(--primary-link-color);
+    padding: var(--spacing-s);
+    text-decoration: none;
+}
+
+#bookmarks a:focus,
+#bookmarks a:hover {
+    color: var(--primary-link-hover-color);
+    outline: none;
+}
+
+/*
+    Accessible hiding for screen readers
+    https://webaim.org/techniques/css/invisiblecontent/#techniques
+*/ 
+.sr-only {
+    height: 1px;
+    left: -10000px;
+    overflow: hidden;
+    position: absolute;
+    top: auto;
+    width: 1px;
+}
+
+/* Responsive Media Queries */
+@media screen and (min-width: 48em) {
+    header { display: flex; }
+    
+    #traichu {
+        padding: 0;
+        width: 45rem; /* 720px */
+    }
+
+    aside img,
+    aside svg { height: 7.5rem; }
+
+    #dock ul {
+        column-gap: 0;
+        justify-content: space-around;
+        padding: 0;
+    }
+
+    #bookmarks { flex-direction: row; }
+}

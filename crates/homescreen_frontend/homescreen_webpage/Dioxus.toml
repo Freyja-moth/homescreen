@@ -1,0 +1,25 @@
+[application]
+name="homescreen_frontend"
+default_platform = "web"
+out_dir = "../homescreen_server/dist"
+asset_dir = "static"
+
+[web.app]
+title="home"
+
+
+[web.watcher]
+watch_path = ["src", "static"]
+
+[web.resource]
+style = [
+    "./css/animations.css",
+    "./css/body.css",
+    "./css/header.css",
+    "./css/main.css",
+    "./css/reset.css",
+    "./css/vars.css",
+]
+
+[web.resource.dev]
+script = []

@@ -1,0 +1,27 @@
+header {
+    animation: fade 1s ease-in;
+    /* display: none; */
+    flex: 0 1 auto;
+    flex-direction: row;
+    justify-content: center;
+    padding: var(--spacing-m) var(--spacing-m) 0 var(--spacing-m);
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+hr {
+    color: var(--color-purple);
+}
+
+#date-time { flex: 1 1 auto; }
+
+#date {
+    color: var(--primary-link-color);
+    font-weight: 700;
+}
+
+#time {
+    color: var(--primary-link-hover-color);
+}
+

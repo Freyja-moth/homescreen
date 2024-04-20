@@ -1,0 +1,13 @@
+[package]
+name = "homescreen_server"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+axum = "0.7.5"
+dioxus = { version = "0.5.1", features = ["fullstack", "launch", "axum"] }
+homescreen_components = { version = "0.1.0", path = "../homescreen_components" }
+homescreen_server_functions = { version = "0.1.0", path = "../homescreen_server_functions" }
+tokio = { version = "1.37.0", features = ["full"] }

@@ -1,0 +1,4 @@
+/target
+Cargo.lock
+/crates/homescreen_backend/Config.toml
+/crates/homescreen_frontend/homescreen_server/dist/

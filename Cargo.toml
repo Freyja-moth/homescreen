@@ -1,0 +1,15 @@
+[workspace]
+members = [
+    "crates/*",
+    "crates/homescreen_frontend/homescreen_server", 
+    "crates/homescreen_frontend/homescreen_components", 
+    "crates/homescreen_frontend/homescreen_webpage",
+    "crates/homescreen_frontend/homescreen_server_functions",
+]
+
+exclude = [ "crates/homescreen_frontend" ]
+resolver = "2"
+
+[workspace.package] 
+version = "0.1.0"
+edition = "2021"

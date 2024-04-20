@@ -1,0 +1,18 @@
+[package]
+name = "homescreen_components"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+capitalize = "0.2.0"
+chrono = "0.4.38"
+dioxus = { version = "0.5.0-alpha.0" }
+gloo-timers = "0.3.0"
+homescreen_data = { version = "0.1.0", path = "../../homescreen_data" }
+homescreen_server_functions = { version = "0.1.0", path = "../homescreen_server_functions" }
+itertools = "0.12.1"
+log = "0.4.21"
+reqwest = { version = "0.12.3", features = ["json"] }
+tokio = "1.37.0"
