@@ -61,6 +61,10 @@ The directory should now look something like this
 
 There is only one table needed for the database
 
+```
+CREATE TABLE websites(website_name VARCHAR(255) PRIMARY KEY, website_link VARCHAR(255) UNIQUE NOT NULL, section ENUM('code', 'fun', 'editing') NOT NULL);
+```
+
 - website_name
 
 The name of the website that you want to be displayed, it does not have to be accurate.
@@ -73,9 +77,6 @@ The link used for the website, it should not include http:// or https:// as that
 
 The section that you want the website to be included in, currently hardedcoded though that may change if needed.
 
-```
-CREATE TABLE websites(website_name VARCHAR(255) PRIMARY KEY, website_link VARCHAR(255) UNIQUE NOT NULL, section ENUM('code', 'fun', 'editing') NOT NULL);
-```
 
 ## Creating/deleting websites
 
