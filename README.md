@@ -62,12 +62,15 @@ The directory should now look something like this
 There is only one table needed for the database
 
 - website_name
+
 The name of the website that you want to be displayed, it does not have to be accurate.
 
-- website_link: 
+- website_link
+
 The link used for the website, it should not include http:// or https:// as that would mess with the way the homepage loads the icons for sites (there is a check for this in the backend though so don't worry about messing it up on accident).
 
 - section
+
 The section that you want the website to be included in, currently hardedcoded though that may change if needed.
 
 ```
