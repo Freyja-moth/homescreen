@@ -6,7 +6,7 @@
     https://css-tricks.com/hsl-hsla-is-great-for-programmatic-color-control/
     https://css-tricks.com/color-alpha-anywhere/
     */
-    --color-black-hsl: 247 26% 19%; /* #1C1C1C */
+    --color-black-hsl: 246, 25.64%, 15.29%; /* #1C1C1C */
     --color-black: hsl(var(--color-black-hsl));
     --color-purple-hsl: 271 72% 61%; /* #F05E1C */
     --color-purple: hsl(var(--color-purple-hsl));
