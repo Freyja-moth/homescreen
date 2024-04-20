@@ -106,6 +106,7 @@ HOST: <your-backend-url>
 Where website_name is the name of the website you want to delete
 
 # TODO's
+- Figure out favicon
 - Add authentication
 - Do proper logging in browser console
 - Unhardcode the sections (possibly)
