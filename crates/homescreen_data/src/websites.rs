@@ -64,12 +64,10 @@ impl Website {
         website_link: String,
         section: WebsiteSection,
     ) -> HomescreenResult<Self> {
-        Self::validate_link(website_link).and_then(|website_link| {
-            Ok(Self {
-                website_name,
-                website_link,
-                section,
-            })
+        Self::validate_link(website_link).map(|website_link| Self {
+            website_name,
+            website_link,
+            section,
         })
     }
     /// Validates a link to make sure that it works properly on the frontend

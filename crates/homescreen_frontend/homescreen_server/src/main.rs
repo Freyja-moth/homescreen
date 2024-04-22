@@ -3,13 +3,14 @@ use dioxus::{
     prelude::{server_fn::axum::register_explicit, DioxusRouterExt, ServeConfig},
 };
 use homescreen_components::prelude::*;
+use homescreen_errors::prelude::*;
 use homescreen_server_functions::prelude::*;
+use log::error;
 
-#[tokio::main]
-async fn main() {
+async fn try_main() -> HomescreenResult {
     let listener = tokio::net::TcpListener::bind("127.0.0.01:8080")
         .await
-        .unwrap();
+        .map_err(|err| FrontendError::UnableToBindToPort(8080, err))?;
 
     register_explicit::<GetWebsites>();
 
@@ -21,5 +22,15 @@ async fn main() {
             .into_make_service(),
     )
     .await
-    .unwrap()
+    .map_err(FrontendError::UnableToStartFrontendServer)
+    .map_err(HomescreenError::from)
+}
+
+#[tokio::main]
+async fn main() {
+    env_logger::init();
+
+    if let Err(err) = try_main().await {
+        error!("{err}");
+    }
 }

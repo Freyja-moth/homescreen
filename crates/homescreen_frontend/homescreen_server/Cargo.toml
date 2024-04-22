@@ -8,6 +8,9 @@ edition = "2021"
 [dependencies]
 axum = "0.7.5"
 dioxus = { version = "0.5.1", features = ["fullstack", "launch", "axum"] }
+env_logger = "0.11.3"
 homescreen_components = { version = "0.1.0", path = "../homescreen_components" }
+homescreen_errors = { version = "0.1.0", path = "../../homescreen_errors" }
 homescreen_server_functions = { version = "0.1.0", path = "../homescreen_server_functions" }
+log = "0.4.21"
 tokio = { version = "1.37.0", features = ["full"] }

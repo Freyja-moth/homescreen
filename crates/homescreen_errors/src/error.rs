@@ -91,4 +91,8 @@ pub enum FrontendError {
     CannotRetrieveWebsites(#[source] ReqwestError),
     #[error("Cannot parse websites, why: {0}")]
     InvalidResponseRecieved(#[source] ReqwestError),
+    #[error("Unable to start frontend server, why: {0}")]
+    UnableToStartFrontendServer(#[source] IoError),
+    #[error("Unable to bind to port {0}, why: {1}")]
+    UnableToBindToPort(u16, #[source] IoError),
 }
