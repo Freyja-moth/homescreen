@@ -25,7 +25,7 @@ impl TryFrom<WebsiteForm> for Website {
             section,
         }: WebsiteForm,
     ) -> Result<Self, Self::Error> {
-        Self::new(website_name, website_link, section)
+        Self::new(website_name, website_link, section.try_into()?)
     }
 }
 

@@ -55,13 +55,13 @@ impl Website {
     pub fn new(
         website_name: String,
         website_link: String,
-        section: String,
+        section: WebsiteSection,
     ) -> HomescreenResult<Self> {
         Self::validate_link(website_link).and_then(|website_link| {
             Ok(Self {
                 website_name,
                 website_link,
-                section: section.try_into()?,
+                section,
             })
         })
     }
