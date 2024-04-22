@@ -178,9 +178,11 @@ impl Website {
     /// # Errors
     /// [ServerError::CannotInsertWebsite]: if the query fails
     pub async fn create_or_update_website(self, database: &MySqlPool) -> HomescreenResult {
-        sqlx::query("INSERT INTO websites(website_name, website_link, section) VALUES(?, ?, ?)")
+        sqlx::query("INSERT INTO websites(website_name, website_link, section) VALUES(?, ?, ?) ON DUPLICATE KEY UPDATE website_link=?, section=?")
             .bind(self.website_name)
-            .bind(self.website_link)
+            .bind(&self.website_link)
+            .bind(self.section.to_string().to_lowercase())
+            .bind(&self.website_link)
             .bind(self.section.to_string().to_lowercase())
             .execute(database)
             .await
