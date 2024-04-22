@@ -78,6 +78,9 @@ impl Time {
     ///
     /// let time = Time::new_unchecked(2, 45);
     /// assert_eq!(time.format(), "Quater to Three");
+    ///
+    /// let time = Time::new_unchecked(23, 55);
+    /// assert_eq!(time.format(), "Five to Midnight");
     /// ```
     pub fn format(&self) -> String {
         match (self.hour(), self.minute() / 5) {
@@ -86,7 +89,10 @@ impl Time {
             (hour, min) if min <= 6 => {
                 format!("{} {}", MINUTES[min as usize], HOURS[hour as usize])
             }
-            (hour, min) => format!("{} {}", MINUTES[min as usize], HOURS[hour as usize + 1]),
+            (hour, min) if hour != 23 => {
+                format!("{} {}", MINUTES[min as usize], HOURS[hour as usize + 1])
+            }
+            (_, min) => format!("{} {}", MINUTES[min as usize], HOURS[0]),
         }
         .to_string()
     }
