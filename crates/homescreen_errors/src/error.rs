@@ -64,8 +64,8 @@ pub enum ServerError {
     CannotInsertWebsite(#[source] SqlxError),
     #[error("Cannot delete website, why: {0}")]
     CannotDeleteWebsite(#[source] SqlxError),
-    #[error("Unable to delete website that already exists")]
-    CannotDeleteExistingWebsite,
+    #[error("Unable to delete website that does not exist")]
+    CannotDeleteNonExistantWebsite,
     #[error("Cannot parse website section")]
     CannotParseWebsiteSection,
     #[error("Website link includes transfer protocol")]
@@ -78,7 +78,7 @@ impl ResponseError for ServerError {
             Self::CannotInsertWebsite(_) => StatusCode::INTERNAL_SERVER_ERROR,
             Self::CannotRetrieveWebsites(_) => StatusCode::INTERNAL_SERVER_ERROR,
             Self::CannotDeleteWebsite(_) => StatusCode::INTERNAL_SERVER_ERROR,
-            Self::CannotDeleteExistingWebsite => StatusCode::BAD_REQUEST,
+            Self::CannotDeleteNonExistantWebsite => StatusCode::BAD_REQUEST,
             Self::WebsiteLinkIncludesTransferProtocol => StatusCode::BAD_REQUEST,
             Self::CannotParseWebsiteSection => StatusCode::BAD_REQUEST,
         }
