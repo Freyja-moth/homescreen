@@ -10,6 +10,7 @@ use std::collections::HashMap;
 use std::str::FromStr;
 
 #[derive(Deserialize, Serialize, Hash, PartialEq, Eq, PartialOrd, Ord, Debug)]
+/// The section used to determine where a website should be placed on the webpage
 pub enum WebsiteSection {
     Code,
     Fun,
@@ -45,6 +46,7 @@ impl WebsiteSection {
 
 #[cfg_attr(feature = "poison_wasm", derive(FromRow))]
 #[derive(Deserialize, Serialize, PartialEq, Eq, Debug)]
+/// A representation of a website
 pub struct Website {
     website_name: String,
     website_link: String,
@@ -52,6 +54,11 @@ pub struct Website {
     section: WebsiteSection,
 }
 impl Website {
+    /// Creates a website from a name, link and section
+    ///
+    /// # Errors
+    /// [ServerError::WebsiteLinkIncludesTransferProtocol]: If the wesbite link includes http:// or
+    /// https://, which would mess with the way website favicons are retrieved
     pub fn new(
         website_name: String,
         website_link: String,
@@ -65,6 +72,11 @@ impl Website {
             })
         })
     }
+    /// Validates a link to make sure that it works properly on the frontend
+    ///
+    /// # Errors
+    /// [ServerError::WebsiteLinkIncludesTransferProtocol]: If the wesbite link includes http:// or
+    /// https://, which would mess with the way website favicons are retrieved
     pub fn validate_link(website_link: String) -> HomescreenResult<String> {
         let protocol_specified =
             website_link.starts_with("https://") || website_link.starts_with("http://");
@@ -75,22 +87,32 @@ impl Website {
             Ok(website_link)
         }
     }
+    /// Retrieves the website name
     pub fn name(&self) -> &str {
         &self.website_name
     }
+    /// Retrieves the website link
     pub fn link(&self) -> &str {
         &self.website_link
     }
+    /// Formats the website link into an icon link
     pub fn icon_link(&self) -> String {
         format!("https://icons.duckduckgo.com/ip3/{}.ico", self.website_link)
     }
+    /// Retrieves the website section
     pub fn section(&self) -> &WebsiteSection {
         &self.section
     }
 }
 
+// Used because importing sqlx will cause the frontend to fail compilation as they rely on a non
+// wasm friendly crate
 #[cfg(feature = "poison_wasm")]
 impl Website {
+    /// Retrieves all websites from the database
+    ///
+    /// # Errors
+    /// [ServerError::CannotRetrieveWebsites]: If any of the databases query fail
     pub async fn get_websites(
         database: &MySqlPool,
     ) -> HomescreenResult<HashMap<WebsiteSection, Box<[Website]>>> {
@@ -106,6 +128,10 @@ impl Website {
 
         Ok(websites)
     }
+    /// Gets all websites that belong to the coding catagory
+    ///
+    /// # Errors
+    /// [ServerError::CannotRetrieveWebsites]: If the database fails
     pub async fn get_coding_websites(database: &MySqlPool) -> HomescreenResult<Box<[Self]>> {
         sqlx::query_as(
             "SELECT website_name, website_link, section FROM websites WHERE section = 'code'",
@@ -117,6 +143,10 @@ impl Website {
         .inspect_err(|err| error!("Cannot retrieve coding websites, {err}"))
         .map(Vec::into_boxed_slice)
     }
+    /// Gets all websites that belong to the fun catagory
+    ///
+    /// # Errors
+    /// [ServerError::CannotRetrieveWebsites]: If the database fails
     pub async fn get_fun_websites(database: &MySqlPool) -> HomescreenResult<Box<[Self]>> {
         sqlx::query_as(
             "SELECT website_name, website_link, section FROM websites WHERE section = 'fun'",
@@ -128,6 +158,10 @@ impl Website {
         .inspect_err(|err| error!("Cannot retrieve fun websites, {err}"))
         .map(Vec::into_boxed_slice)
     }
+    /// Gets all websites that belong to the editing catagory
+    ///
+    /// # Errors
+    /// [ServerError::CannotRetrieveWebsites]: If the database fails
     pub async fn get_editing_websites(database: &MySqlPool) -> HomescreenResult<Box<[Self]>> {
         sqlx::query_as(
             "SELECT website_name, website_link, section FROM websites WHERE section = 'editing'",
@@ -139,6 +173,10 @@ impl Website {
         .inspect_err(|err| error!("Cannot retrieve editing websites, {err}"))
         .map(Vec::into_boxed_slice)
     }
+    /// Creates or updates a website in the database
+    ///
+    /// # Errors
+    /// [ServerError::CannotInsertWebsite]: if the query fails
     pub async fn create_or_update_website(self, database: &MySqlPool) -> HomescreenResult {
         sqlx::query("INSERT INTO websites(website_name, website_link, section) VALUES(?, ?, ?)")
             .bind(self.website_name)
@@ -152,6 +190,11 @@ impl Website {
 
         Ok(())
     }
+    /// Deletes a website using it's id
+    ///
+    /// # Errors
+    /// [ServerError::CannotDeleteWebsite]: If the query fails
+    /// [ServerError::CannotDeleteNonExistantWebsite]: If the website does not exist
     pub async fn delete_websites(website_name: &str, database: &MySqlPool) -> HomescreenResult {
         sqlx::query("DELETE FROM websites WHERE website_name = ?")
             .bind(website_name)
@@ -160,7 +203,7 @@ impl Website {
             .map_err(ServerError::CannotDeleteWebsite)
             .and_then(|rows| {
                 if rows.rows_affected() == 0 {
-                    Err(ServerError::CannotDeleteExistingWebsite)
+                    Err(ServerError::CannotDeleteNonExistantWebsite)
                 } else {
                     Ok(())
                 }

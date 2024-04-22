@@ -10,6 +10,8 @@ use serde::Deserialize;
 use sqlx::MySqlPool;
 
 #[derive(Deserialize)]
+/// An intermediate struct used to retrieve a sudo website from a request that will then be
+/// converted into an actual website
 pub struct WebsiteForm {
     website_name: String,
     website_link: String,
